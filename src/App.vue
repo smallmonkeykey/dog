@@ -6,6 +6,7 @@ import Contact from './components/Contact.vue'
 
 <template>
   <Contact/>
+   <div id="map"></div>
 </template>
 
 <style>
@@ -17,4 +18,6 @@ import Contact from './components/Contact.vue'
   color: #2c3e50;
   margin-top: 60px;
 }
+#map { height: 180px; }
+
 </style>
