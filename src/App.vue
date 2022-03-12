@@ -1,12 +1,12 @@
 <script setup>
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
-import Contact from './components/Contact.vue'
+import Main from './components/main-dog.vue'
+import Data from './components/dog-data.vue'
 </script>
 
 <template>
-  <Contact/>
-   <div id="map"></div>
+  <Main/>
 </template>
 
 <style>
