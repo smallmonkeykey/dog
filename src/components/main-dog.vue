@@ -5,13 +5,13 @@ import axios from "axios";
 const count = ref(0);
 const dogImages = ref([]);
 const mainNumber = ref();
-let sec = ref(60);
+let sec = ref(5);
 
 const add = () => {
   count.value += 1;
   getMainNumber();
   meetDog();
-  intervalId();
+  // intervalId();
 };
 
 // const countdown = () => {
@@ -21,24 +21,22 @@ const add = () => {
 // sec.value = Math.floor(differ/1000)%60
 // setTimeout(countdown,1000)
 // console.log(now.getMinutes)
-// 
+//
 
-const countdown = () =>{
-    console.log(sec.value--);
-  }
+// const countdown = () =>{
+//     console.log(sec.value--);
+//   }
 
-const intervalId = setInterval(() =>{
-    if(sec.value > 0){
-      clearInterval(intervalId) //intervalIdをclearIntervalで指定している
-    }}, 1000);
+// const intervalId = setInterval(() =>{
+//     if(sec.value > 0){
+//       clearInterval(intervalId) //intervalIdをclearIntervalで指定している
+//     }}, 1000);
 
 let meetDog = async () => {
-  await axios
-    .get(`https://dog.ceo/api/breeds/image/random/50`)
-    .then(function (response) {
-      console.log(response.data.message);
-      dogImages.value = response.data.message;
-    });
+  await axios.get(`https://dog.ceo/api/breeds/image/random/50`).then(function (response) {
+    console.log(response.data.message);
+    dogImages.value = response.data.message;
+  });
 };
 
 const getMainNumber = () => {
@@ -55,6 +53,20 @@ const getRandomPosition = () => {
   const n = Math.floor(Math.random() * 100);
   return `top:${n}px;`;
 };
+
+// タイマーカウント用途
+const countStart = () => {
+  const intervalId = setInterval(() => {
+    decrementNumber();
+    if (sec.value == 0) {
+      clearInterval(intervalId);
+    }
+  }, 1000);
+};
+
+const decrementNumber = () => {
+  sec.value--;
+};
 </script>
 
 <template>
@@ -64,6 +76,7 @@ const getRandomPosition = () => {
   </p>
 
   <p><img :src="dogImages[mainNumber]" /></p>
+  <button type="button" @click="countStart">ゲームスタート</button>
   <button type="button" @click="add">犬に出会った数 {{ count }}</button>
   <div id="main">
     <li v-for="dog in dogImages" id="main-img">
