@@ -1,16 +1,21 @@
 <script setup>
 import { ref, onUpdated, onMounted, reactive } from "vue";
 import axios from "axios";
-import drag from "@branu-jp/v-drag";
 
 const count = ref(0)
 const dogImages = ref([])
 const mainNumber = ref()
 
+const now=new Date()
+const minuteLater=new Date(now.getFullYear(),now.getMonth(),now.getDate(),now.getHours(),now.getMinutes()+1,now.getSeconds())
+const differ=minuteLater.getTime()-now.getTime()
+const sec=Math.floor(differ/1000)%60
+
 const add = () => {
   count.value += 1
   getMainNumber()
   meetDog()
+  console.log(sec)
 };
 
 let meetDog = async () => {
@@ -40,11 +45,13 @@ const getRandomPosition = ()=> {
 </script>
 
 <template>
+<p class="timer">残り<span>{{sec}}</span>秒</p>
+
   <P><img :src="dogImages[mainNumber]"></P>
   <button type="button" @click="add">犬に出会った数 {{ count }}</button>
     <div id="main">
       <li v-for="dog in dogImages" id="main-img">
-        <img :src="dog" :style="getRandomRotate()+getRandomPosition()" v-drag>
+        <img :src="dog" :style="getRandomRotate()+getRandomPosition()">
       </li>
     </div>
 </template>
@@ -68,7 +75,6 @@ img {
   list-style: none;
   display: inline-block;
   margin: 0;
-  position: absolute;
 }
 
 #main-img:hover{
