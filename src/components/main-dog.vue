@@ -6,52 +6,34 @@ const count = ref(0);
 const dogImages = ref([]);
 const mainNumber = ref();
 let sec = ref(5);
+const score = ref(0);
 
 const add = () => {
   count.value += 1;
   getMainNumber();
   meetDog();
-  // intervalId();
 };
-
-// const countdown = () => {
-// const now = new Date()
-// const minuteLater = new Date(now.getFullYear(),now.getMonth(),now.getDate(),now.getHours(),now.getMinutes()+1)
-// const differ = minuteLater.getTime()-now.getTime()
-// sec.value = Math.floor(differ/1000)%60
-// setTimeout(countdown,1000)
-// console.log(now.getMinutes)
-//
-
-// const countdown = () =>{
-//     console.log(sec.value--);
-//   }
-
-// const intervalId = setInterval(() =>{
-//     if(sec.value > 0){
-//       clearInterval(intervalId) //intervalIdをclearIntervalで指定している
-//     }}, 1000);
 
 let meetDog = async () => {
   await axios.get(`https://dog.ceo/api/breeds/image/random/50`).then(function (response) {
     console.log(response.data.message);
-    dogImages.value = response.data.message;
+    dogImages.value = response.data.message
   });
 };
 
 const getMainNumber = () => {
-  mainNumber.value = Math.floor(Math.random() * 50);
-  console.log(mainNumber.value);
+  mainNumber.value = Math.floor(Math.random() * 50)
+  console.log(mainNumber.value)
 };
 
 const getRandomRotate = () => {
   const r = Math.floor(Math.random() * 180);
-  return `transform: rotate(${r}deg);`;
+  return `transform: rotate(${r}deg);`
 };
 
 const getRandomPosition = () => {
-  const n = Math.floor(Math.random() * 100);
-  return `top:${n}px;`;
+  const n = Math.floor(Math.random() * 100)
+  return `top:${n}px;`
 };
 
 // タイマーカウント用途
@@ -67,6 +49,18 @@ const countStart = () => {
 const decrementNumber = () => {
   sec.value--;
 };
+
+const judgement = (e)=> {
+  console.log(e.target.src)  
+  console.log(dogImages.value[mainNumber.value]) 
+  if (e.target.src === dogImages.value[mainNumber.value]){
+    score.value++
+    getMainNumber();
+    meetDog();
+  }
+
+}
+
 </script>
 
 <template>
@@ -74,12 +68,13 @@ const decrementNumber = () => {
     残り<span>{{ sec }}</span
     >秒
   </p>
+  <p class="score">スコア  {{ score }}</p>
 
-  <p><img :src="dogImages[mainNumber]" /></p>
+  <p><img :src="dogImages[mainNumber]"></p>
   <button type="button" @click="countStart">ゲームスタート</button>
   <button type="button" @click="add">犬に出会った数 {{ count }}</button>
   <div id="main">
-    <li v-for="dog in dogImages" id="main-img">
+    <li v-for="dog in dogImages" id="main-img" @click="judgement">
       <img :src="dog" :style="getRandomRotate() + getRandomPosition()" />
     </li>
   </div>
