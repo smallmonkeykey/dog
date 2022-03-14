@@ -5,8 +5,10 @@ import axios from "axios";
 const count = ref(0);
 const dogImages = ref([]);
 const mainNumber = ref();
-let sec = ref(5);
+let sec = ref(30);
 const score = ref(0);
+const r = ref();
+
 
 const add = () => {
   count.value += 1;
@@ -31,6 +33,7 @@ const getRandomRotate = () => {
   return `transform: rotate(${r}deg);`
 };
 
+
 const getRandomPosition = () => {
   const n = Math.floor(Math.random() * 100)
   return `top:${n}px;`
@@ -39,6 +42,7 @@ const getRandomPosition = () => {
 // タイマーカウント用途
 const countStart = () => {
   const intervalId = setInterval(() => {
+    
     decrementNumber();
     if (sec.value == 0) {
       clearInterval(intervalId);
@@ -75,7 +79,7 @@ const judgement = (e)=> {
   <button type="button" @click="add">犬に出会った数 {{ count }}</button>
   <div id="main">
     <li v-for="dog in dogImages" id="main-img" @click="judgement">
-      <img :src="dog" :style="getRandomRotate() + getRandomPosition()" />
+      <img :src="dog" :style="getRandomRotate() + getRandomPosition()">
     </li>
   </div>
 </template>
