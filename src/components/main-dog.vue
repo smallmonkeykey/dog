@@ -5,15 +5,17 @@ import axios from "axios";
 const count = ref(0);
 const dogImages = ref([]);
 const mainNumber = ref();
-let sec = ref(30);
+let sec = ref(5);
 const score = ref(0);
 const r = ref();
+const display = ref(false)
 
 
 const add = () => {
   count.value += 1;
   getMainNumber();
   meetDog();
+  countStart()
 };
 
 let meetDog = async () => {
@@ -41,11 +43,11 @@ const getRandomPosition = () => {
 
 // タイマーカウント用途
 const countStart = () => {
-  const intervalId = setInterval(() => {
-    
+  const intervalId = setInterval(() => {  
     decrementNumber();
     if (sec.value == 0) {
       clearInterval(intervalId);
+      display.value = true;
     }
   }, 1000);
 };
@@ -68,6 +70,13 @@ const judgement = (e)=> {
 </script>
 
 <template>
+  <div id="overlay" v-if="display">
+    <div id="modal">
+      <p>あなたのスコアは</p>
+      <p>{{ score }}</p>
+      <p><button>TOPへ戻る</button></p>
+    </div>
+  </div>
   <p class="timer">
     残り<span>{{ sec }}</span
     >秒
@@ -95,7 +104,7 @@ img {
 #main {
   width: 90%;
   height: 500px;
-  background-color: pink;
+  /* background-color: pink; */
   margin: auto;
 }
 
@@ -108,5 +117,26 @@ img {
 #main-img:hover {
   border: 3px solid #f56c6c;
   border-radius: 4px;
+}
+
+#overlay{
+  z-index:1;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background-color:rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#modal{
+  z-index:2;
+  height: 80%;
+  width: 70%;
+  padding: 1px;
+  background:#fff;
 }
 </style>
