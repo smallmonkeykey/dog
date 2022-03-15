@@ -70,6 +70,8 @@ const judgement = (e)=> {
 </script>
 
 <template>
+
+
   <div id="overlay" v-if="display">
     <div id="modal">
       <p>あなたのスコアは</p>
@@ -77,6 +79,7 @@ const judgement = (e)=> {
       <p><button>TOPへ戻る</button></p>
     </div>
   </div>
+
   <p class="timer">
     残り<span>{{ sec }}</span
     >秒
@@ -84,8 +87,8 @@ const judgement = (e)=> {
   <p class="score">スコア  {{ score }}</p>
 
   <p><img :src="dogImages[mainNumber]"></p>
-  <button type="button" @click="countStart">ゲームスタート</button>
-  <button type="button" @click="add">犬に出会った数 {{ count }}</button>
+  <button type="button" @click="add">ゲームスタート</button>
+  <!-- <button type="button" @click="add">犬に出会った数 {{ count }}</button> -->
   <div id="main">
     <li v-for="dog in dogImages" id="main-img" @click="judgement">
       <img :src="dog" :style="getRandomRotate() + getRandomPosition()">
@@ -94,6 +97,18 @@ const judgement = (e)=> {
 </template>
 
 <style scoped>
+header {
+   width: 100%;
+   background-color: #FFFFCC;
+   position: fixed;
+   top: 0;
+   padding: 3px;
+}
+
+h1 {
+  
+}
+
 img {
   width: 80px;
   height: 120px;
