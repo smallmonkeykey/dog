@@ -10,7 +10,8 @@
   "dependencies": {
     "@branu-jp/v-drag": "^0.1.0",
     "axios": "^0.26.0",
-    "vue": "^3.2.25"
+    "vue": "^3.2.25",
+    "vue-kinesis": "^2.0.5"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^2.2.0",

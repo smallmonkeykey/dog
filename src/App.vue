@@ -13,8 +13,6 @@ import top from './components/top.vue'
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif,"ヒラギノ角ゴ ProN W6";
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
   margin: 0;

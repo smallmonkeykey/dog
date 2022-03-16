@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onUpdated, onMounted, reactive } from "vue";
 import axios from "axios";
+import top from "./top.vue"
 
 const count = ref(0);
 const dogImages = ref([]);
