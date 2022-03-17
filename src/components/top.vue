@@ -34,8 +34,6 @@ import Main from './main-dog.vue'
   margin-bottom: 10px;
 }
 
-
-
 h1 {
   text-shadow: 1px 1px 2px  #69b792 ;
   font-size: 50px;
