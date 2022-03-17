@@ -21,6 +21,7 @@ import Main from './main-dog.vue'
  
  </kinesis-container>
 </div>
+<button @click="add">実験</button>
 </template>
 
 
