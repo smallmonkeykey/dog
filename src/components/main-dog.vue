@@ -4,16 +4,23 @@ import axios from "axios";
 import VueKinesis from "vue-kinesis";
 import { KinesisContainer, KinesisElement} from "vue-kinesis"
 
+
 const count = ref(0);
 const dogImages = ref([]);
 const mainNumber = ref();
-let sec = ref(5);
+let sec = ref(3);
 const score = ref(0);
 const r = ref();
 const display = ref(false)
+const displayTop = ref(true)
+const displayGame = ref(false)
+const displaybtn = ref(true)
 
 
-const add = () => {
+const gameStart = () => {
+  displayTop.value = false
+  displayGame.value = true
+  displaybtn.value = false
   count.value += 1;
   getMainNumber();
   meetDog();
@@ -66,15 +73,16 @@ const judgement = (e)=> {
     getMainNumber();
     meetDog();
   }
-
 }
 
-
+const reloadPage = () => {
+  window.location.reload()
+}
 </script>
 
 <template>
 
-<div class="top" event="move">
+<div class="top" event="move" v-show="displayTop">
 <kinesis-container>
   <kinesis-element 
    :strength="600"
@@ -83,31 +91,37 @@ const judgement = (e)=> {
   </kinesis-element>
 <h2>お題に出された犬を見つけだそう</h2>
 <h1>百犬一首</h1>
- 
  </kinesis-container>
 </div>
 
   <div id="overlay" v-if="display">
     <div id="modal">
+      <img src="public/g0429.png">
       <p>あなたのスコアは</p>
       <p>{{ score }}</p>
-      <p><button>TOPへ戻る</button></p>
+      <p><button @click="reloadPage" class="btn">TOPへ戻る</button></p>
     </div>
   </div>
 
-  <p class="timer">
-    残り<span>{{ sec }}</span
-    >秒
-  </p>
-  <p class="score">スコア  {{ score }}</p>
+<button type="button" @click="gameStart" v-if="displaybtn" class="gameStartBtn">GAME START</button>
 
-  <p><img :src="dogImages[mainNumber]"></p>
-  <button type="button" @click="add">ゲームスタート</button>
-  <!-- <button type="button" @click="add">犬に出会った数 {{ count }}</button> -->
+<div class="game" v-if="displayGame">
+  <div class="box">
+    <img src="public/dogfoot.png" class="foot"> 
+    <img src="public/dogfoot.png" class="foot"> 
+    <p class="timer">
+      {{ sec }}秒<span>残り</span>
+    </p>
+    <p><img :src="dogImages[mainNumber]"></p>
+    <p class="score">{{ score }}  SCORE</p>
+    <img src="public/dogfoot.png" class="foot"> 
+    <img src="public/dogfoot.png" class="foot"> 
+  </div>
   <div id="main">
     <li v-for="dog in dogImages" id="main-img" @click="judgement">
       <img :src="dog" :style="getRandomRotate() + getRandomPosition()">
     </li>
+  </div>
   </div>
 </template>
 
@@ -162,8 +176,8 @@ img {
 }
 
 #main-img:hover {
-  border: 3px solid #f56c6c;
-  border-radius: 4px;
+  opacity: 0.3;
+  color: white;
 }
 
 #overlay{
@@ -186,4 +200,64 @@ img {
   padding: 1px;
   background:#fff;
 }
+
+.gameStartBtn {
+  background: rgba(160, 238, 199, 0.5);
+  border-radius: 30px;
+  font-size: 30px;
+  color: #00a78d;
+  padding: 10px 30px;
+  border-color: #fff;
+  border-bottom: 3px solid #a9b6af;
+  position: relative;
+  transition-property: opacity;
+  transition-duration: .5s;
+}
+.gameStartBtn:hover {
+  opacity: .7;
+  transform: translate(0, -10px);
+	box-shadow: 5px 5px 3px 0 rgba(12, 12, 12, 0.2);
+}
+
+.timer {
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  background-color: white;
+  border-radius: 50%;
+  font-size: 20px;
+  color: rgb(78, 85, 82);
+}
+.score {
+ width: 50px;
+  height: 50px;
+  line-height: 50px;
+  background-color: white;
+  border-radius: 50%;
+  font-size: 20px;
+  color: rgb(78, 85, 82);
+}
+
+.box {
+  display: flex;
+  justify-content: space-between;
+}
+
+#modal {
+  font-size: 50px;
+}
+
+.btn {
+  background: rgba(160, 238, 199, 0.5);
+  border-radius: 30px;
+  font-size: 30px;
+  color: #00a78d;
+  padding: 10px 30px;
+  border-color: #fff;
+  border-bottom: 3px solid #a9b6af;
+  position: relative;
+  transition-property: opacity;
+  transition-duration: .5s;
+}
+
 </style>

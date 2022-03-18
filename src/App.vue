@@ -11,6 +11,7 @@ import top from './components/top.vue'
 </template>
 
 <style>
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif,"ヒラギノ角ゴ ProN W6";
   text-align: center;
