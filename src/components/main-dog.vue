@@ -108,13 +108,13 @@ const reloadPage = () => {
 <div class="game" v-if="displayGame">
   <div class="box">
     <img src="public/dogfoot.png" class="foot"> 
-    <img src="public/dogfoot.png" class="foot"> 
+    <img src="public/dogfoot.png" class="foot foot1"> 
     <p class="timer">
       {{ sec }}秒<span>残り</span>
     </p>
     <p><img :src="dogImages[mainNumber]"></p>
     <p class="score">{{ score }}  SCORE</p>
-    <img src="public/dogfoot.png" class="foot"> 
+    <img src="public/dogfoot.png" class="foot foot1"> 
     <img src="public/dogfoot.png" class="foot"> 
   </div>
   <div id="main">
@@ -258,6 +258,21 @@ img {
   position: relative;
   transition-property: opacity;
   transition-duration: .5s;
+}
+
+@media screen and (max-width: 540px) { 
+  #topDogImage {
+    width: 80%;
+    height: 70%;
+  }
+
+ .foot1 {
+   display: none;
+ }
+
+ #modal p {
+   font-size: 40px;
+ }
 }
 
 </style>
