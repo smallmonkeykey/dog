@@ -8,7 +8,7 @@ import { KinesisContainer, KinesisElement} from "vue-kinesis"
 const count = ref(0);
 const dogImages = ref([]);
 const mainNumber = ref();
-let sec = ref(3);
+let sec = ref(30);
 const score = ref(0);
 const r = ref();
 const display = ref(false)
