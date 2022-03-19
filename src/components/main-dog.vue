@@ -81,7 +81,7 @@ const reloadPage = () => {
   <div class="top" event="move" v-show="displayTop">
     <kinesis-container>
       <kinesis-element :strength="600" axis="x">
-        <img src="../assets/y0593.png" id="topDogImage" />
+        <img src="/src/assets/y0593.png" id="topDogImage" />
       </kinesis-element>
       <h2>お題に出された犬を見つけだそう</h2>
       <h1>百犬一首</h1>
@@ -90,7 +90,7 @@ const reloadPage = () => {
 
   <div id="overlay" v-if="display">
     <div id="modal">
-      <img src="../assets/g0429.png" />
+      <img src="/src/assets/g0429.png" />
       <p>あなたのスコアは</p>
       <p>{{ score }}</p>
       <p><button @click="reloadPage" class="btn">TOPへ戻る</button></p>
@@ -103,13 +103,13 @@ const reloadPage = () => {
 
   <div class="game" v-if="displayGame">
     <div class="box">
-      <img src="../assets/dogfoot.png" class="foot" />
-      <img src="../assets/dogfoot.png" class="foot foot1" />
+      <img src="/src/assets/dogfoot.png" class="foot" />
+      <img src="/src/assets/dogfoot.png" class="foot foot1" />
       <p class="timer">{{ sec }}秒<span>残り</span></p>
       <p><img :src="dogImages[mainNumber]" /></p>
       <p class="score">{{ score }} SCORE</p>
-      <img src="../assets/dogfoot.png" class="foot foot1" />
-      <img src="../assets/dogfoot.png" class="foot" />
+      <img src="/src/assets/dogfoot.png" class="foot foot1" />
+      <img src="/src/assets/dogfoot.png" class="foot" />
     </div>
     <div id="main">
       <li v-for="dog in dogImages" id="main-img" @click="judgement">
