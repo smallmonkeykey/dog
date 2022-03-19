@@ -2,8 +2,7 @@
 import { ref, onUpdated, onMounted, reactive } from "vue";
 import axios from "axios";
 import VueKinesis from "vue-kinesis";
-import { KinesisContainer, KinesisElement} from "vue-kinesis"
-
+import { KinesisContainer, KinesisElement } from "vue-kinesis";
 
 const count = ref(0);
 const dogImages = ref([]);
@@ -11,48 +10,46 @@ const mainNumber = ref();
 let sec = ref(30);
 const score = ref(0);
 const r = ref();
-const display = ref(false)
-const displayTop = ref(true)
-const displayGame = ref(false)
-const displaybtn = ref(true)
-
+const display = ref(false);
+const displayTop = ref(true);
+const displayGame = ref(false);
+const displaybtn = ref(true);
 
 const gameStart = () => {
-  displayTop.value = false
-  displayGame.value = true
-  displaybtn.value = false
+  displayTop.value = false;
+  displayGame.value = true;
+  displaybtn.value = false;
   count.value += 1;
   getMainNumber();
   meetDog();
-  countStart()
+  countStart();
 };
 
 let meetDog = async () => {
   await axios.get(`https://dog.ceo/api/breeds/image/random/50`).then(function (response) {
     console.log(response.data.message);
-    dogImages.value = response.data.message
+    dogImages.value = response.data.message;
   });
 };
 
 const getMainNumber = () => {
-  mainNumber.value = Math.floor(Math.random() * 50)
-  console.log(mainNumber.value)
+  mainNumber.value = Math.floor(Math.random() * 50);
+  console.log(mainNumber.value);
 };
 
 const getRandomRotate = () => {
   const r = Math.floor(Math.random() * 180);
-  return `transform: rotate(${r}deg);`
+  return `transform: rotate(${r}deg);`;
 };
 
-
 const getRandomPosition = () => {
-  const n = Math.floor(Math.random() * 100)
-  return `top:${n}px;`
+  const n = Math.floor(Math.random() * 100);
+  return `top:${n}px;`;
 };
 
 // タイマーカウント用途
 const countStart = () => {
-  const intervalId = setInterval(() => {  
+  const intervalId = setInterval(() => {
     decrementNumber();
     if (sec.value == 0) {
       clearInterval(intervalId);
@@ -65,68 +62,64 @@ const decrementNumber = () => {
   sec.value--;
 };
 
-const judgement = (e)=> {
-  console.log(e.target.src)  
-  console.log(dogImages.value[mainNumber.value]) 
-  if (e.target.src === dogImages.value[mainNumber.value]){
-    score.value++
+const judgement = (e) => {
+  console.log(e.target.src);
+  console.log(dogImages.value[mainNumber.value]);
+  if (e.target.src === dogImages.value[mainNumber.value]) {
+    score.value++;
     getMainNumber();
     meetDog();
   }
-}
+};
 
 const reloadPage = () => {
-  window.location.reload()
-}
+  window.location.reload();
+};
 </script>
 
 <template>
-
-<div class="top" event="move" v-show="displayTop">
-<kinesis-container>
-  <kinesis-element 
-   :strength="600"
-   axis="x">
-    <img src="public/y0593.png" id="topDogImage">
-  </kinesis-element>
-<h2>お題に出された犬を見つけだそう</h2>
-<h1>百犬一首</h1>
- </kinesis-container>
-</div>
+  <div class="top" event="move" v-show="displayTop">
+    <kinesis-container>
+      <kinesis-element :strength="600" axis="x">
+        <img src="../assets/y0593.png" id="topDogImage" />
+      </kinesis-element>
+      <h2>お題に出された犬を見つけだそう</h2>
+      <h1>百犬一首</h1>
+    </kinesis-container>
+  </div>
 
   <div id="overlay" v-if="display">
     <div id="modal">
-      <img src="public/g0429.png">
+      <img src="../assets/g0429.png" />
       <p>あなたのスコアは</p>
       <p>{{ score }}</p>
       <p><button @click="reloadPage" class="btn">TOPへ戻る</button></p>
     </div>
   </div>
 
-<button type="button" @click="gameStart" v-if="displaybtn" class="gameStartBtn">GAME START</button>
+  <button type="button" @click="gameStart" v-if="displaybtn" class="gameStartBtn">
+    GAME START
+  </button>
 
-<div class="game" v-if="displayGame">
-  <div class="box">
-    <img src="public/dogfoot.png" class="foot"> 
-    <img src="public/dogfoot.png" class="foot foot1"> 
-    <p class="timer">
-      {{ sec }}秒<span>残り</span>
-    </p>
-    <p><img :src="dogImages[mainNumber]"></p>
-    <p class="score">{{ score }}  SCORE</p>
-    <img src="public/dogfoot.png" class="foot foot1"> 
-    <img src="public/dogfoot.png" class="foot"> 
-  </div>
-  <div id="main">
-    <li v-for="dog in dogImages" id="main-img" @click="judgement">
-      <img :src="dog" :style="getRandomRotate() + getRandomPosition()">
-    </li>
-  </div>
+  <div class="game" v-if="displayGame">
+    <div class="box">
+      <img src="../assets/dogfoot.png" class="foot" />
+      <img src="../assets/dogfoot.png" class="foot foot1" />
+      <p class="timer">{{ sec }}秒<span>残り</span></p>
+      <p><img :src="dogImages[mainNumber]" /></p>
+      <p class="score">{{ score }} SCORE</p>
+      <img src="../assets/dogfoot.png" class="foot foot1" />
+      <img src="../assets/dogfoot.png" class="foot" />
+    </div>
+    <div id="main">
+      <li v-for="dog in dogImages" id="main-img" @click="judgement">
+        <img :src="dog" :style="getRandomRotate() + getRandomPosition()" />
+      </li>
+    </div>
   </div>
 </template>
 
 <style scoped>
-
 .top {
   background-color: antiquewhite;
 }
@@ -136,9 +129,9 @@ const reloadPage = () => {
 }
 
 h1 {
-  text-shadow: 1px 1px 2px  #69b792 ;
+  text-shadow: 1px 1px 2px #69b792;
   font-size: 50px;
-  color:#00a78d;
+  color: #00a78d;
   letter-spacing: 10px;
 }
 
@@ -148,11 +141,11 @@ h1 {
 }
 
 header {
-   width: 100%;
-   background-color: #FFFFCC;
-   position: fixed;
-   top: 0;
-   padding: 3px;
+  width: 100%;
+  background-color: #ffffcc;
+  position: fixed;
+  top: 0;
+  padding: 3px;
 }
 
 img {
@@ -180,25 +173,25 @@ img {
   color: white;
 }
 
-#overlay{
-  z-index:1;
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background-color:rgba(0,0,0,0.5);
+#overlay {
+  z-index: 1;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-#modal{
-  z-index:2;
+#modal {
+  z-index: 2;
   height: 80%;
   width: 70%;
   padding: 1px;
-  background:#fff;
+  background: #fff;
 }
 
 .gameStartBtn {
@@ -211,12 +204,12 @@ img {
   border-bottom: 3px solid #a9b6af;
   position: relative;
   transition-property: opacity;
-  transition-duration: .5s;
+  transition-duration: 0.5s;
 }
 .gameStartBtn:hover {
-  opacity: .7;
+  opacity: 0.7;
   transform: translate(0, -10px);
-	box-shadow: 5px 5px 3px 0 rgba(12, 12, 12, 0.2);
+  box-shadow: 5px 5px 3px 0 rgba(12, 12, 12, 0.2);
 }
 
 .timer {
@@ -229,7 +222,7 @@ img {
   color: rgb(78, 85, 82);
 }
 .score {
- width: 50px;
+  width: 50px;
   height: 50px;
   line-height: 50px;
   background-color: white;
@@ -257,22 +250,21 @@ img {
   border-bottom: 3px solid #a9b6af;
   position: relative;
   transition-property: opacity;
-  transition-duration: .5s;
+  transition-duration: 0.5s;
 }
 
-@media screen and (max-width: 540px) { 
+@media screen and (max-width: 540px) {
   #topDogImage {
     width: 80%;
     height: 70%;
   }
 
- .foot1 {
-   display: none;
- }
+  .foot1 {
+    display: none;
+  }
 
- #modal p {
-   font-size: 40px;
- }
+  #modal p {
+    font-size: 40px;
+  }
 }
-
 </style>
