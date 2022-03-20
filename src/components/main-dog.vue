@@ -1,79 +1,79 @@
 <script setup>
-import { ref, onUpdated, onMounted, reactive } from "vue";
-import axios from "axios";
-import VueKinesis from "vue-kinesis";
-import { KinesisContainer, KinesisElement } from "vue-kinesis";
+import { ref, onUpdated, onMounted, reactive } from "vue"
+import axios from "axios"
+import VueKinesis from "vue-kinesis"
+import { KinesisContainer, KinesisElement } from "vue-kinesis"
 
-const count = ref(0);
-const dogImages = ref([]);
-const mainNumber = ref();
-let sec = ref(30);
-const score = ref(0);
-const r = ref();
-const display = ref(false);
-const displayTop = ref(true);
-const displayGame = ref(false);
-const displaybtn = ref(true);
+const count = ref(0)
+const dogImages = ref([])
+const mainNumber = ref()
+let sec = ref(30)
+const score = ref(0)
+const r = ref()
+const display = ref(false)
+const displayTop = ref(true)
+const displayGame = ref(false)
+const displaybtn = ref(true)
 
 const gameStart = () => {
-  displayTop.value = false;
-  displayGame.value = true;
-  displaybtn.value = false;
-  count.value += 1;
-  getMainNumber();
-  meetDog();
-  countStart();
-};
+  displayTop.value = false
+  displayGame.value = true
+  displaybtn.value = false
+  count.value += 1
+  getMainNumber()
+  meetDog()
+  countStart()
+}
 
 let meetDog = async () => {
   await axios.get(`https://dog.ceo/api/breeds/image/random/50`).then(function (response) {
-    console.log(response.data.message);
-    dogImages.value = response.data.message;
-  });
-};
+    console.log(response.data.message)
+    dogImages.value = response.data.message
+  })
+}
 
 const getMainNumber = () => {
-  mainNumber.value = Math.floor(Math.random() * 50);
-  console.log(mainNumber.value);
-};
+  mainNumber.value = Math.floor(Math.random() * 50)
+  console.log(mainNumber.value)
+}
 
 const getRandomRotate = () => {
   const r = Math.floor(Math.random() * 180);
-  return `transform: rotate(${r}deg);`;
+  return `transform: rotate(${r}deg);`
 };
 
 const getRandomPosition = () => {
   const n = Math.floor(Math.random() * 100);
-  return `top:${n}px;`;
+  return `top:${n}px;`
 };
 
 // タイマーカウント用途
 const countStart = () => {
   const intervalId = setInterval(() => {
-    decrementNumber();
+    decrementNumber()
     if (sec.value == 0) {
-      clearInterval(intervalId);
-      display.value = true;
+      clearInterval(intervalId)
+      display.value = true
     }
-  }, 1000);
-};
+  }, 1000)
+}
 
 const decrementNumber = () => {
-  sec.value--;
+  sec.value--
 };
 
 const judgement = (e) => {
-  console.log(e.target.src);
-  console.log(dogImages.value[mainNumber.value]);
+  console.log(e.target.src)
+  console.log(dogImages.value[mainNumber.value])
   if (e.target.src === dogImages.value[mainNumber.value]) {
-    score.value++;
-    getMainNumber();
-    meetDog();
+    score.value++
+    getMainNumber()
+    meetDog()
   }
 };
 
 const reloadPage = () => {
-  window.location.reload();
+  window.location.reload()
 };
 </script>
 
